@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=3 uid="uid://dcnkbgmxo4nci"]
+
+[ext_resource type="PackedScene" uid="uid://xvirvni0l0oy" path="res://addons/srcoder_fps_controller/mouse_lock.tscn" id="1_0j7bi"]
+[ext_resource type="PackedScene" uid="uid://dy26xc485fhld" path="res://addons/srcoder_fps_controller/player.tscn" id="2_n3vm8"]
+[ext_resource type="Material" uid="uid://dufa2xscu08tg" path="res://addons/srcoder_fps_controller/assets/materials/grid.material" id="3_2526v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m8l4c"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_joixm"]
+sky_material = SubResource("ProceduralSkyMaterial_m8l4c")
+
+[sub_resource type="Environment" id="Environment_vqobv"]
+background_mode = 2
+sky = SubResource("Sky_joixm")
+ambient_light_source = 3
+tonemap_mode = 3
+ssao_enabled = true
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tpcr4"]
+material = ExtResource("3_2526v")
+size = Vector2(50, 50)
+subdivide_width = 9
+subdivide_depth = 9
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ah4h"]
+size = Vector3(50, 1, 50)
+
+[node name="testlevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vqobv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.93702, -0.0967245, -0.335615, 0.349275, 0.259488, 0.900374, 0, -0.96089, 0.276929, -8.0384, 5.10943, 1.03282)
+shadow_enabled = true
+shadow_opacity = 0.6
+
+[node name="MouseLock" parent="." instance=ExtResource("1_0j7bi")]
+
+[node name="Player" parent="." instance=ExtResource("2_n3vm8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.96291, 1.10191, -2.62038)
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="ground" type="MeshInstance3D" parent="Map"]
+material_override = ExtResource("3_2526v")
+mesh = SubResource("PlaneMesh_tpcr4")
+skeleton = NodePath("../..")
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Map/ground"]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/ground/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_2ah4h")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -1, -0.482963, -13.1294)
+use_collision = true
+size = Vector3(3, 2, 5)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.0170372, 10.8706)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = ExtResource("3_2526v")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.517037, 10.8706)
+use_collision = true
+size = Vector3(3, 2, 3)
+material = ExtResource("3_2526v")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.01704, 10.8706)
+use_collision = true
+size = Vector3(3, 3, 3)
+material = ExtResource("3_2526v")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, -5, -0.482963, -13.1294)
+use_collision = true
+size = Vector3(3, 2, 5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, -9, -0.836516, -13.483)
+use_collision = true
+size = Vector3(3, 3, 5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, -13, -1.33652, -14.349)
+use_collision = true
+size = Vector3(3, 5, 5)
